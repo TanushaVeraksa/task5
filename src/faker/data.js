@@ -1,6 +1,8 @@
 import { allFakers, faker } from '@faker-js/faker';
 
-export function createRandomUser(locate = 'ru') {
+let locate = 'ru';
+
+export function createRandomUser() {
     return {
       userId: faker.string.uuid(),
       fullName: allFakers[locate].person.fullName(),
@@ -11,8 +13,11 @@ export function createRandomUser(locate = 'ru') {
       },
       phone: allFakers[locate].phone.number(), 
     };
-  }
+}
   
-  export const users = faker.helpers.multiple(createRandomUser, {
-    count: 5,
-  });
+export const users = (count = 20) => faker.helpers.multiple(createRandomUser, {count: count});
+
+export function setLocate(value) {
+    locate = value;
+}
+
