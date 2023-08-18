@@ -9,6 +9,7 @@ import Form from 'react-bootstrap/Form';
 function MainPage() {
   const [data, setData] = useState([]);
   const [fetching, setFetching] = useState(true);
+  const [select, setSelect] = useState(true);
 
   useEffect(() => {
     document.addEventListener('scroll', scrollHandler);
@@ -26,6 +27,13 @@ function MainPage() {
     setFetching(false);
   }, [fetching])
 
+
+  
+  useEffect(() => {
+    setData(users(20))
+    setFetching(false);
+  }, [select])
+
   const scrollHandler = (e) => {
     if(e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 100) {
       setFetching(true)
@@ -33,23 +41,24 @@ function MainPage() {
   }
 
   const selectHandler = (e) => {
-    console.log(e.target.value)
+    setLocate(e.target.value);
+    setSelect((prevState) => !prevState);
   }
 
   return (
     <Container>
-    <Row>
-    <Col md={2} className='mb-2 mt-2'>
-    <Form.Select aria-label="Default select example" onChange={selectHandler}>
-      <option value="ru">Russia</option>
-      <option value="pl">Polish</option>
-      <option value="en_GB">Great Britain</option>
-    </Form.Select>
-    </Col>
-    <Col md={2}></Col>
-    <Col md={2}></Col>
-    <Col md={2}></Col>
-    </Row>
+      <Row>
+      <Col md={2} className='mb-2 mt-2'>
+      <Form.Select aria-label="Default select example" onChange={selectHandler}>
+        <option value="ru">Russia</option>
+        <option value="pl">Polish</option>
+        <option value="en_GB">Great Britain</option>
+      </Form.Select>
+      </Col>
+      <Col md={2}></Col>
+      <Col md={2}></Col>
+      <Col md={2}></Col>
+      </Row>
     <Table striped bordered hover>
     <thead>
       <tr>
